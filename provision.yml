@@ -1,0 +1,12 @@
+---
+
+- name: Playbook for configuring a cluster of synchronized Raspberry Pi video
+        players.
+
+  hosts: players
+  roles:
+    - player
+  remote_user: pi
+  sudo: yes
+
+- include: deploy.yml

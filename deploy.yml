@@ -1,0 +1,23 @@
+---
+
+- name: Playbook for deploying new application code to a cluster of video
+        players.
+
+  hosts: players
+  remote_user: pi
+  sudo: no
+  vars:
+    app_dir: /app
+
+  tasks:
+  - name: 'Create app directory'
+    file: path={{ app_dir }}
+          owner={{ ansible_ssh_user }}
+          state=directory
+
+  - name: 'Deploy app'
+    git: repo=https://github.com/heisters/node-omxplayer-sync.git
+         dest={{ app_dir }}
+
+  - name: 'Install app dependencies'
+    npm: path={{ app_dir }} state=present

@@ -1,47 +1,62 @@
-# ansible-pi
+ansible-pi: video-cluster
+=========================
 
 ![](https://raw.github.com/scottmotte/ansible-pi/master/ansible-pi.jpg)
 
-Quickly setup your Raspberry Pi - particularly WIFI settings.
+Quickly setup your Raspberry Pi to be part of a synchronized cluster of
+video players.
 
-There is a [complete guide to setting up your raspberry pi without a keyboard and mouse](http://sendgrid.com/blog/complete-guide-set-raspberry-pi-without-keyboard-mouse/) that goes along with this repo.
+Based on this [complete guide to setting up your raspberry pi without a keyboard and mouse](http://sendgrid.com/blog/complete-guide-set-raspberry-pi-without-keyboard-mouse/).
 
-## Installation
+Usage
+-----
 
-Clone and setup the ansible script. 
+Ensure ansible is installed (see Requirements, below).
 
-```
-git clone https://github.com/scottmotte/ansible-pi.git
-cd ansible-pi
-cp hosts.example hosts
-cp wpa_supplicant.conf.example wpa_supplicant.conf
-```
+Clone and setup the ansible script.
 
-Edit the `wpa_supplicant.conf` and `hosts` files.
+    git clone https://github.com/heisters/ansible-pi.git
+    cd ansible-pi
+    git checkout video-cluster
+    cp hosts.example hosts
 
-Deploy using [ansible](http://www.ansibleworks.com). (install instructions for ansible are in [requirements](#requirements) below.
+To find pis on the local network, run:
 
-```
-ansible-playbook playbook.yml -i hosts --ask-pass --sudo -c paramiko
-```
+    script/find_pis
 
-## Requirements
+Put these IPs in `hosts` under "players".
 
-[Ansible](http://www.ansibleworks.com/) is required. 
+Optionally, copy your ssh id to the players:
 
-### Installing Ansible on Mac
+    which ssh-copy-id || brew install ssh-copy-id
+    ssh-copy-id pi@XXX.XXX.X.XXX # password is 'raspberry'
 
-```
-cd /tmp
-git clone git://github.com/ansible/ansible.git
-cd ./ansible
-git checkout v1.4.3
-sudo make install
-sudo easy_install jinja2 
-sudo easy_install pyyaml
-sudo easy_install paramiko
-```
+To check that the players are properly configured:
 
-## History
+    ansible all -m ping -i hosts
 
-This project was originally built when trying out my first Raspberry Pi. The setup process was not as easy as I wanted.
+Provision the players:
+
+    ansible-playbook provision.yml -i hosts
+
+If you didn't copy your ssh id previously, you'll need to pass
+--ask-pass to that command.
+
+Deployment
+----------
+
+    ansible-playbook deploy.yml -i hosts
+
+Requirements
+------------
+
+[Ansible](http://www.ansibleworks.com/) is required.
+
+    pip install ansible
+
+Useful Commands
+---------------
+
+Run adhoc commands:
+
+    ansible -i hosts players -a "<bash command>"
