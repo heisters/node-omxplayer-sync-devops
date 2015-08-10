@@ -36,4 +36,11 @@
 - name: 'Install omxplayer'
   apt: deb=/tmp/omxplayer.deb
 
+- name: 'Install forever'
+  npm: name=forever global=yes production=yes state=present
 
+- name: 'Create service configuration'
+  template: src=sysinitv.sh dest=/etc/init.d/video-player mode="0755"
+
+- name: 'Setup service'
+  service: name=video-player enabled=yes

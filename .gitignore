@@ -2,3 +2,4 @@
 hosts
 wpa_supplicant.conf
 **/files/tmp
+/log
