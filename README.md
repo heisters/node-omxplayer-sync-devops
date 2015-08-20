@@ -8,6 +8,15 @@ video players.
 
 Based on this [complete guide to setting up your raspberry pi without a keyboard and mouse](http://sendgrid.com/blog/complete-guide-set-raspberry-pi-without-keyboard-mouse/).
 
+PI Setup
+--------
+
+1. Image your pis. `script/image_card` helps with this.
+2. Boot the new pis and go through initialization. Expand the
+   filesystem, enable SSH, and optionally set the hostname to something
+   unique.
+
+
 Usage
 -----
 
@@ -20,11 +29,12 @@ Clone and setup the ansible script.
     git checkout video-cluster
     cp hosts.example hosts
 
-To find pis on the local network, run:
+If you did not set the hostnames of the pis, you can use this script to
+find pis on the local network:
 
     script/find_pis
 
-Put these IPs in `hosts` under "players".
+Put the pi hosts or IPs in `hosts` under "players".
 
 Optionally, copy your ssh id to the players:
 
