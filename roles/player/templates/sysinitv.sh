@@ -29,8 +29,8 @@ if [ -e /lib/lsb/init-functions ]; then
 	. /lib/lsb/init-functions
 fi;
 
-pidFile="{{ app_dir }}/video-player.pid"
-logFile="{{ app_dir }}/video-player.log"
+pidFile="{{ app_dir }}/pid"
+logFile="{{ app_dir }}/stdout.log"
 
 app="{{ app_dir }}/main.js"
 user={{ ansible_ssh_user }}
