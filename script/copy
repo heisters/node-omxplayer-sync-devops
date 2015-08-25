@@ -4,4 +4,4 @@ if [ "$1" == "" ] || [ "$2" == "" ]; then
   echo "usage: $0 [src] [dest]"
   exit 1
 fi
-ansible -i hosts players -f 2 -m copy -a "src=$1 dest=$2"
+ansible -i hosts players -m copy -a "src=$1 dest=$2"

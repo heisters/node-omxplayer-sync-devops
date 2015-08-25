@@ -4,4 +4,4 @@ if [ "$1" == "" ]; then
   echo "usage: $0 [state]"
   exit 1
 fi
-ansible -i hosts players -f 2 -m service -a "name=video-player state=$1"
+ansible -i hosts players -m service -a "name=video-player state=$1"
