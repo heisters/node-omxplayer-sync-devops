@@ -44,3 +44,19 @@
 
 - name: 'Setup service'
   service: name=video-player enabled=yes
+
+
+- name: 'Install iptables-persistent'
+  apt: name=iptables-persistent state=present
+
+- name: 'Check if port 80 redirection is enabled'
+  shell: iptables -L -t nat | grep -q "http redir ports 8080"
+  register: check_redir_http
+  ignore_errors: yes
+  changed_when: no
+  always_run: yes
+
+- name: 'Redirect port 80'
+  command: iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+  when: check_redir_http.rc != 0
+  notify: 'Save iptables'

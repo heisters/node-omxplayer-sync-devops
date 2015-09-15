@@ -1,2 +1,5 @@
 ---
 # handlers file for roles/player
+
+- name: 'Save iptables'
+  shell: iptables-save > /etc/iptables/rules.v4
