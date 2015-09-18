@@ -1,3 +1,4 @@
 ---
-omxplayer_url: http://omxplayer.sconde.net/builds/omxplayer_0.3.6~git20150710~4d8ffd1_armhf.deb
-omxplayer_sha: 663a61f2ea041705286a17d12075333eb932607ba70e6e99d62e65b425dbf6f2
+omxplayer_version: 0.3.6~git20150912~d99bd86
+omxplayer_url: http://omxplayer.sconde.net/builds/omxplayer_{{ omxplayer_version }}_armhf.deb
+omxplayer_sha: 0a95fea2d1d06dc0d6eec3e512ba90d816f2693d

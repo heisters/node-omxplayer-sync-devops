@@ -5,25 +5,31 @@
 - name: 'Upgrade APT to the lastest packages'
   apt: upgrade=safe
 
-- name: 'Create local tmp dir'
-  local_action: file path={{ role_path }}/files/tmp state=directory
-  sudo: no
+- name: 'Ensure the right version of omxplayer is installed'
+  apt: name=omxplayer={{ omxplayer_version }}
 
-- name: 'Fetch latest omxplayer'
-  local_action: get_url url={{ omxplayer_url }}
-                        dest={{ role_path }}/files/tmp/omxplayer.deb
-                        sha256sum={{ omxplayer_sha }}
-  sudo: no
+#- name: 'Create local tmp dir'
+  #local_action: file path={{ role_path }}/files/tmp state=directory
+  #sudo: no
 
-- name: 'Copy omxplayer'
-  copy: src=tmp/omxplayer.deb dest=/tmp/omxplayer.deb
+#- name: 'Fetch latest omxplayer'
+  #local_action: get_url url={{ omxplayer_url }}
+                        #dest={{ role_path }}/files/tmp/omxplayer.deb
+                        #sha256sum={{ omxplayer_sha }}
+  #sudo: no
 
-- name: 'Install omxplayer dependencies'
-  apt: name={{ item }} state=present
-  with_items:
-    - libpcre3
-    - fonts-freefont-ttf
-    - fbset
+#- name: 'Copy omxplayer'
+  #copy: src=tmp/omxplayer.deb dest=/tmp/omxplayer.deb
+
+#- name: 'Install omxplayer dependencies'
+  #apt: name={{ item }} state=present
+  #with_items:
+    #- libpcre3
+    #- fonts-freefont-ttf
+    #- fbset
+
+#- name: 'Install omxplayer'
+  #apt: deb=/tmp/omxplayer.deb
 
 - name: 'Install dbus dependencies'
   apt: name={{ item }} state=present
@@ -32,9 +38,6 @@
     - libglib2.0-dev
     - libexpat1
     - libexpat1-dev
-
-- name: 'Install omxplayer'
-  apt: deb=/tmp/omxplayer.deb
 
 - name: 'Install forever'
   npm: name=forever global=yes production=yes state=present
